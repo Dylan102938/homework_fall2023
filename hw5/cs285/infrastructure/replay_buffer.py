@@ -12,7 +12,9 @@ class ReplayBuffer:
         self.dones = None
 
     def sample(self, batch_size):
-        rand_indices = np.random.randint(0, self.size, size=(batch_size,)) % self.max_size
+        rand_indices = (
+            np.random.randint(0, self.size, size=(batch_size,)) % self.max_size
+        )
         return {
             "observations": self.observations[rand_indices],
             "actions": self.actions[rand_indices],
@@ -139,9 +141,7 @@ class MemoryEfficientReplayBuffer:
 
         Returns the index of the frame in the replay buffer.
         """
-        assert (
-            frame.ndim == 2
-        ), "Single-frame observation should have dimensions (H, W)"
+        assert frame.ndim == 2, "Single-frame observation should have dimensions (H, W)"
         assert frame.dtype == np.uint8, "Observation should be uint8 (0-255)"
 
         self.framebuffer[self.framebuffer_idx] = frame
@@ -248,9 +248,9 @@ class MemoryEfficientReplayBuffer:
         assert next_observation.shape == self.observation_shape
         assert done.shape == ()
 
-        self.observation_framebuffer_idcs[
-            self.size % self.max_size
-        ] = self.recent_observation_framebuffer_idcs
+        self.observation_framebuffer_idcs[self.size % self.max_size] = (
+            self.recent_observation_framebuffer_idcs
+        )
         self.actions[self.size % self.max_size] = action
         self.rewards[self.size % self.max_size] = reward
         self.dones[self.size % self.max_size] = done
@@ -261,9 +261,9 @@ class MemoryEfficientReplayBuffer:
         next_framebuffer_idcs = self._compute_frame_history_idcs(
             next_frame_idx, self.current_trajectory_framebuffer_begin
         )
-        self.next_observation_framebuffer_idcs[
-            self.size % self.max_size
-        ] = next_framebuffer_idcs
+        self.next_observation_framebuffer_idcs[self.size % self.max_size] = (
+            next_framebuffer_idcs
+        )
 
         self.size += 1
 

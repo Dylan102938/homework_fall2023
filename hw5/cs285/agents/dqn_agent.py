@@ -11,7 +11,8 @@ import cs285.infrastructure.pytorch_util as ptu
 class DQNAgent(nn.Module):
     def __init__(
         self,
-        observation_shape: Sequence[int], num_actions: int,
+        observation_shape: Sequence[int],
+        num_actions: int,
         make_critic: Callable[[Tuple[int, ...], int], nn.Module],
         make_optimizer: Callable[[torch.nn.ParameterList], torch.optim.Optimizer],
         make_lr_schedule: Callable[

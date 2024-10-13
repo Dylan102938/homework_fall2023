@@ -39,9 +39,7 @@ def run_training_loop(config: dict, logger: Logger, args: argparse.Namespace):
     batch_size = config["batch_size"] or batch_size
 
     discrete = isinstance(env.action_space, gym.spaces.Discrete)
-    assert (
-        not discrete
-    ), "Our actor-critic implementation only supports continuous action spaces. (This isn't a fundamental limitation, just a current implementation decision.)"
+    assert not discrete, "Our actor-critic implementation only supports continuous action spaces. (This isn't a fundamental limitation, just a current implementation decision.)"
 
     ob_shape = env.observation_space.shape
     ac_dim = env.action_space.shape[0]

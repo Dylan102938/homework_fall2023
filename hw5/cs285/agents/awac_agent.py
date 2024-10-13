@@ -16,7 +16,9 @@ class AWACAgent(DQNAgent):
         temperature: float,
         **kwargs,
     ):
-        super().__init__(observation_shape=observation_shape, num_actions=num_actions, **kwargs)
+        super().__init__(
+            observation_shape=observation_shape, num_actions=num_actions, **kwargs
+        )
 
         self.actor = make_actor(observation_shape, num_actions)
         self.actor_optimizer = make_actor_optimizer(self.actor.parameters())
@@ -41,7 +43,6 @@ class AWACAgent(DQNAgent):
             # TODO(student): Compute the TD target
             target_values = ...
 
-        
         # TODO(student): Compute Q(s, a) and loss similar to DQN
         q_values = ...
         assert q_values.shape == target_values.shape
@@ -89,8 +90,18 @@ class AWACAgent(DQNAgent):
 
         return loss.item()
 
-    def update(self, observations: torch.Tensor, actions: torch.Tensor, rewards: torch.Tensor, next_observations: torch.Tensor, dones: torch.Tensor, step: int):
-        metrics = super().update(observations, actions, rewards, next_observations, dones, step)
+    def update(
+        self,
+        observations: torch.Tensor,
+        actions: torch.Tensor,
+        rewards: torch.Tensor,
+        next_observations: torch.Tensor,
+        dones: torch.Tensor,
+        step: int,
+    ):
+        metrics = super().update(
+            observations, actions, rewards, next_observations, dones, step
+        )
 
         # Update the actor.
         actor_loss = self.update_actor(observations, actions)

@@ -10,7 +10,7 @@ class RandomAgent:
     def get_action(self, *args, **kwargs):
         # TODO(student): Return a random action
         return ...
-    
+
     def update(self, *args, **kwargs):
         # Update is a no-op for the random agent
         return {}

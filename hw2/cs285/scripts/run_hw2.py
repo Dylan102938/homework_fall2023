@@ -32,7 +32,9 @@ def run_training_loop(args):
 
     # add action noise, if needed
     if args.action_noise_std > 0:
-        assert not discrete, f"Cannot use --action_noise_std for discrete environment {args.env_name}"
+        assert (
+            not discrete
+        ), f"Cannot use --action_noise_std for discrete environment {args.env_name}"
         env = ActionNoiseWrapper(env, args.seed, args.action_noise_std)
 
     max_ep_len = args.ep_len or env.spec.max_episode_steps

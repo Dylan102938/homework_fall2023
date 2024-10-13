@@ -61,9 +61,7 @@ def run_training_loop(config: dict, logger: Logger, args: argparse.Namespace):
         stacked_frames = True
         frame_history_len = env.observation_space.shape[0]
         assert frame_history_len == 4, "only support 4 stacked frames"
-        replay_buffer = MemoryEfficientReplayBuffer(
-            frame_history_len=frame_history_len
-        )
+        replay_buffer = MemoryEfficientReplayBuffer(frame_history_len=frame_history_len)
     elif len(env.observation_space.shape) == 1:
         stacked_frames = False
         replay_buffer = ReplayBuffer()
@@ -89,7 +87,7 @@ def run_training_loop(config: dict, logger: Logger, args: argparse.Namespace):
 
     for step in tqdm.trange(config["total_steps"], dynamic_ncols=True):
         epsilon = exploration_schedule.value(step)
-        
+
         # TODO(student): Compute action
         action = ...
 

@@ -72,15 +72,14 @@ class DQNAgent(nn.Module):
                 raise NotImplementedError
             else:
                 next_action = ...
-            
+
             next_q_values = ...
             target_values = ...
 
         # TODO(student): train the critic with the target values
         qa_values = ...
-        q_values = ... # Compute from the data actions; see torch.gather
+        q_values = ...  # Compute from the data actions; see torch.gather
         loss = ...
-
 
         self.critic_optimizer.zero_grad()
         loss.backward()

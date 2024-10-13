@@ -12,7 +12,9 @@ class ReplayBuffer:
         self.dones = None
 
     def sample(self, batch_size):
-        rand_indices = np.random.randint(0, self.size, size=(batch_size,)) % self.max_size
+        rand_indices = (
+            np.random.randint(0, self.size, size=(batch_size,)) % self.max_size
+        )
         return {
             "observations": self.observations[rand_indices],
             "actions": self.actions[rand_indices],
@@ -85,7 +87,7 @@ class ReplayBuffer:
         rewards: np.ndarray,
         next_observations: np.ndarray,
         dones: np.ndarray,
-            ):
+    ):
         """
         Insert a batch of transitions into the replay buffer.
         """
@@ -111,7 +113,9 @@ class ReplayBuffer:
         assert next_observations.shape[1:] == self.next_observations.shape[1:]
         assert dones.shape[1:] == self.dones.shape[1:]
 
-        indices = np.arange(self.size, self.size + observations.shape[0]) % self.max_size
+        indices = (
+            np.arange(self.size, self.size + observations.shape[0]) % self.max_size
+        )
         self.observations[indices] = observations
         self.actions[indices] = actions
         self.rewards[indices] = rewards

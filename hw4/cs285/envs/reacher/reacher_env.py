@@ -30,7 +30,7 @@ class Reacher7DOFEnv(mujoco_env.MujocoEnv, utils.EzPickle):
             curr_dir + "/assets/sawyer.xml",
             2,
             observation_space=observation_space,
-            **kwargs
+            **kwargs,
         )
         utils.EzPickle.__init__(self)
         self.observation_dim = 20

@@ -1,0 +1,35 @@
+[tool.poetry]
+name = "homework-fall2023"
+version = "0.1.0"
+description = ""
+authors = ["Dylan Feng <dylan@sonnetai.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+torch = "^2.4.1"
+mujoco = "^3.2.3"
+gym = "^0.26.2"
+tensorboard = "^2.18.0"
+tensorboardx = "^2.6.2.2"
+matplotlib = "^3.9.2"
+ipython = "^8.28.0"
+moviepy = "^1.0.3"
+pyvirtualdisplay = "^3.0"
+opencv-python = "^4.10.0.84"
+ipdb = "^0.13.13"
+swig = "^4.2.1"
+box2d-py = "^2.3.8"
+
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.6.9"
+isort = "^5.13.2"
+
+[tool.poetry-exec-plugin.commands]
+reformat = "ruff format && isort . && ruff . --fix"
+lint = "isort . --check-only && ruff ."
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

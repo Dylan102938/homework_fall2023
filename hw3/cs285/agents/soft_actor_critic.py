@@ -104,7 +104,9 @@ class SoftActorCritic(nn.Module):
         with torch.no_grad():
             observation = ptu.from_numpy(observation)[None]
 
-            action_distribution: torch.distributions.Distribution = self.actor(observation)
+            action_distribution: torch.distributions.Distribution = self.actor(
+                observation
+            )
             action: torch.Tensor = action_distribution.sample()
 
             assert action.shape == (1, self.action_dim), action.shape
@@ -134,10 +136,10 @@ class SoftActorCritic(nn.Module):
          - for clip-Q, clip to the minimum of the two critics' predictions.
 
         Parameters:
-            next_qs (torch.Tensor): Q-values of shape (num_critics, batch_size). 
+            next_qs (torch.Tensor): Q-values of shape (num_critics, batch_size).
                 Leading dimension corresponds to target values FROM the different critics.
         Returns:
-            torch.Tensor: Target values of shape (num_critics, batch_size). 
+            torch.Tensor: Target values of shape (num_critics, batch_size).
                 Leading dimension corresponds to target values FOR the different critics.
         """
 
@@ -158,11 +160,14 @@ class SoftActorCritic(nn.Module):
             # Default, we don't need to do anything.
             pass
 
-
         # If our backup strategy removed a dimension, add it back in explicitly
         # (assume the target for each critic will be the same)
         if next_qs.shape == (batch_size,):
-            next_qs = next_qs[None].expand((self.num_critic_networks, batch_size)).contiguous()
+            next_qs = (
+                next_qs[None]
+                .expand((self.num_critic_networks, batch_size))
+                .contiguous()
+            )
 
         assert next_qs.shape == (
             self.num_critic_networks,
@@ -210,10 +215,7 @@ class SoftActorCritic(nn.Module):
 
             # Compute the target Q-value
             target_values: torch.Tensor = ...
-            assert target_values.shape == (
-                self.num_critic_networks,
-                batch_size
-            )
+            assert target_values.shape == (self.num_critic_networks, batch_size)
 
         # TODO(student): Update the critic
         # Predict Q-values
