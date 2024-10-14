@@ -31,11 +31,11 @@ def sample_trajectory(
             else:
                 img = env.render(mode="single_rgb_array")
             image_obs.append(
-                cv2.resize(img, dsize=(250, 250), interpolation=cv2.INTER_CUBIC)
+                cv2.resize(img[0], dsize=(250, 250), interpolation=cv2.INTER_CUBIC)
             )
 
         # TODO use the most recent ob to decide what to do
-        ac = policy.get_action(obs)
+        ac = policy.get_action(ob)
         ac = ac[0]
 
         # TODO: take that action and get reward and next ob
